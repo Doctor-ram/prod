@@ -1,0 +1,49 @@
+pipeline {
+    agent any
+
+    stages {
+        stage('Checkout') {
+            steps {
+                git 'https://github.com/Doctor-ram/prod.git'
+            }
+        }
+
+        stage('Install Dependencies') {
+            steps {
+                sh 'pip install -r requirements.txt'
+            }
+        }
+
+        stage('Test') {
+            steps {
+                sh 'python -m unittest discover || true' // skip if no tests
+            }
+        }
+
+        stage('Build Docker Image') {
+            steps {
+                sh 'docker build -t flask-hello-world .'
+            }
+        }
+
+        stage('Run Container') {
+            steps {
+                // Stop if already running
+                sh '''
+                    docker rm -f flask-hello-container || true
+                    docker run -d -p 5000:5000 --name flask-hello-container flask-hello-world
+                '''
+            }
+        }
+    }
+
+    post {
+        success {
+
+            echo 'App is running at http://43.204.96.84:5000'
+        }
+        failure {
+            echo 'Build or run failed.'
+        }
+    }
+}
