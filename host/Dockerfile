@@ -8,7 +8,7 @@ RUN pip install -r requirements.txt
 COPY . .
 
 # Add environment variable to define Flask entry point
-ENV FLASK_APP=app.py
+ENV FLASK_APP=hello_world.py
 
 # Expose port (optional, but good practice)
 EXPOSE 5000
