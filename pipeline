@@ -1,9 +1,5 @@
 pipeline {
-    agent {
-        docker {
-            image 'python:3.12' // or any version you need
-        }
-    }
+    agent any
 
     stages {
         stage('Checkout') {
@@ -17,7 +13,7 @@ pipeline {
         stage('Install Dependencies') {
             steps {
                 sh 'ls'
-                sh 'pip install -r host/requirements.txt'
+                sh 'pipx install -r host/requirements.txt'
             }
         }
 
