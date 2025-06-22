@@ -46,6 +46,7 @@ pipeline {
                 -p 5000:5000 \
                 --name flask-hello-container \
                 flask-hello-world
+            docker ps
         '''
     }
 }
