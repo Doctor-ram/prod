@@ -12,8 +12,11 @@ pipeline {
 
         stage('Install Dependencies') {
             steps {
-                sh 'ls'
-                sh 'pipx install -r host/requirements.txt'
+                sh '''
+            python3 -m venv venv
+            source venv/bin/activate
+            pip install -r host/requirements.txt
+        '''
             }
         }
 
