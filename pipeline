@@ -4,7 +4,9 @@ pipeline {
     stages {
         stage('Checkout') {
             steps {
-                git 'https://github.com/Doctor-ram/prod.git'
+                git branch: 'main',
+                    url: 'https://github.com/Doctor-ram/prod.git',
+                    credentialsId: 'test-jenkins'
             }
         }
 
