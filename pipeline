@@ -11,23 +11,11 @@ pipeline {
         }
 
         stage('Install Dependencies') {
-    steps {
-        sh '''
-            # Ensure python3 is installed
-            which python3 || (echo "Python3 not found!" && exit 1)
-
-            # Install pip if not available
-            if ! command -v pip3 > /dev/null; then
-                echo "pip not found, installing..."
-                python3 -m ensurepip --upgrade
-            fi
-
-            # Upgrade pip and install requirements
-            python3 -m pip install --upgrade pip
-            python3 -m pip install -r host/requirements.txt
-        '''
-    }
-}
+            steps {
+                sh 'apt-get update && apt-get install -y python3-pip'
+                sh 'pip install -r host/requirements.txt'
+            }
+        }
 
         stage('Test') {
             steps {
