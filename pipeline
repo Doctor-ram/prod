@@ -22,7 +22,10 @@ pipeline {
 
         stage('Test') {
             steps {
-                sh 'python -m unittest discover || true' // skip if no tests
+                sh '''
+            . venv/bin/activate
+            python -m unittest discover || true
+        '''
             }
         }
 
